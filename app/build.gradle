@@ -2,10 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-androidExtensions{
-    experimental = true
-}
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -17,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField("String", "API_KEY", "\"5d9d5877d8be00e3f525e67793429946f002fcc3\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

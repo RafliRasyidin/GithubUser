@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
+import com.rasyidin.githubuser.BuildConfig
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 import java.lang.Exception
@@ -13,9 +14,8 @@ import java.lang.Exception
 class DetailViewModel: ViewModel() {
 
     companion object {
-        private const val TOKEN = "token 5d9d5877d8be00e3f525e67793429946f002fcc3"
+        private const val TOKEN = "Token ${BuildConfig.API_KEY}"
     }
-
     val detailUser = MutableLiveData<ArrayList<User>>()
 
     fun setUserDetail(username: String) {
