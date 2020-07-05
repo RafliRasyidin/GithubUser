@@ -3,14 +3,13 @@ package com.rasyidin.githubuser.ui.activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,17 +37,6 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory()
         ).get(UserViewModel::class.java)
 
-        btnSearch.text = resources.getString(R.string.btnSearch)
-        textUsername.text = resources.getString(R.string.Username)
-
-        btnSearch.setOnClickListener {
-            val username = edtSearch.text.toString()
-            if (username.isEmpty()) return@setOnClickListener
-            showLoading(true)
-            userViewModel.setUser(username)
-            it.hideKeyboard()
-        }
-
         userViewModel.getUser().observe(this, Observer { userItems ->
             if (userItems != null) {
                 userAdapter.setData(userItems)
@@ -60,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as  SearchManager
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.search).actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -100,9 +88,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun View.hideKeyboard() {
-        val inputMethodManager =
-            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
-    }
 }
