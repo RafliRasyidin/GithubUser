@@ -25,3 +25,7 @@ Eapp/src/main/java/com/rasyidin/githubuser/ui/activity/MainActivity.kt,0\9\0910
 Kapp/src/main/java/com/rasyidin/githubuser/ui/activity/DetailUserActivity.kt,1\9\194f41e399b0a3bdd4a1505bde0c6850ffaf3e47
 A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+[
++app/src/main/res/layout/activity_detail.xml,f\2\f22ce1ff238aad049c933bb28da5033b974b1b1a
+V
+&app/src/main/res/values-in/strings.xml,a\0\a06f2d4b3e5f01d338d880f1f4d0231656947328
