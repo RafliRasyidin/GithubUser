@@ -14,7 +14,7 @@ import java.lang.Exception
 class DetailViewModel: ViewModel() {
 
     companion object {
-        private const val TOKEN = "Token ${BuildConfig.API_KEY}"
+        private const val TOKEN = "token ${BuildConfig.API_KEY}"
     }
     val detailUser = MutableLiveData<ArrayList<User>>()
 
