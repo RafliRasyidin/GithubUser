@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
             progressBarListItem.visibility = View.VISIBLE
         } else {
             progressBarListItem.visibility = View.GONE
+            imgSearch.visibility = View.GONE
         }
     }
 

@@ -7,6 +7,17 @@
     android:padding="16dp"
     tools:context=".ui.activity.MainActivity">
 
+    <ImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:src="@drawable/ic_search"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUser"
         android:layout_width="match_parent"
