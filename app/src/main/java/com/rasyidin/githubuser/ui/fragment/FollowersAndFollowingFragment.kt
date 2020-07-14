@@ -10,11 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rasyidin.githubuser.R
 import com.rasyidin.githubuser.adapter.ListUserAdapter
-import com.rasyidin.githubuser.model.FollowersViewModel
-import com.rasyidin.githubuser.model.FollowingViewModel
+import com.rasyidin.githubuser.model.User
+import com.rasyidin.githubuser.viewmodel.FollowersViewModel
+import com.rasyidin.githubuser.viewmodel.FollowingViewModel
 import kotlinx.android.synthetic.main.fragment_followers_and_following.*
 
 class FollowersAndFollowingFragment : Fragment() {
+
+    private var user: User? = null
 
     companion object {
         private const val ARG_SECTION_NUMBER = "section_number"
@@ -72,9 +75,9 @@ class FollowersAndFollowingFragment : Fragment() {
         followersViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(FollowersViewModel::class.java)
 
-        val username = activity?.intent?.getStringExtra(EXTRA_USERNAME)
+        user = activity?.intent?.getParcelableExtra(EXTRA_USERNAME) as User
         showLoading(true)
-        followersViewModel.setFollowersUser(username!!)
+        followersViewModel.setFollowersUser(user!!.login!!)
 
         followersViewModel.getFollowersUser()
             .observe(viewLifecycleOwner, Observer { followersItem ->
@@ -89,8 +92,8 @@ class FollowersAndFollowingFragment : Fragment() {
         followingViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
             .get(FollowingViewModel::class.java)
 
-        val username = activity?.intent?.getStringExtra(EXTRA_USERNAME)
-        followingViewModel.setFollowingUser(username!!)
+        user = activity?.intent?.getParcelableExtra(EXTRA_USERNAME) as User
+        followingViewModel.setFollowingUser(user!!.login!!)
 
         followingViewModel.getFollowingUser()
             .observe(viewLifecycleOwner, Observer { followingItem ->
