@@ -14,5 +14,6 @@
     <string name="location">Location</string>
     <string name="tab_title_1">Followers</string>
     <string name="tab_title_2">Following</string>
+    <string name="favorite">Favorite</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
