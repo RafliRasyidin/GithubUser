@@ -1,4 +1,4 @@
-package com.rasyidin.githubuser.model
+package com.rasyidin.githubuser.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import com.rasyidin.githubuser.BuildConfig
+import com.rasyidin.githubuser.model.User
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
 import java.lang.Exception
@@ -24,7 +25,9 @@ class UserViewModel: ViewModel() {
         val url = "https://api.github.com/search/users?q=$username"
 
         val client = AsyncHttpClient()
-        client.addHeader("Authorization", TOKEN)
+        client.addHeader("Authorization",
+            TOKEN
+        )
         client.addHeader("User-Agent", "request")
         client.get(url, object: AsyncHttpResponseHandler() {
             override fun onSuccess(
