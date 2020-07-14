@@ -47,7 +47,7 @@ class ListUserAdapter : RecyclerView.Adapter<ListUserAdapter.UserViewHolder>() {
 
                 itemView.setOnClickListener {
                     Intent(context, DetailUserActivity::class.java).apply {
-                        putExtra(DetailUserActivity.EXTRA_USERNAME, userItem.login)
+                        putExtra(DetailUserActivity.EXTRA_USERNAME, userItem)
                     }.run {
                         context.startActivity(this)
                     }
