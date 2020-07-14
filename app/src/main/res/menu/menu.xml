@@ -2,15 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/baseline_search_white_36"
+        android:id="@+id/actionSearch"
+        android:icon="@drawable/baseline_search_24"
         android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="collapseActionView|always" />
+    <item
+        android:id="@+id/actionFavorite"
+        android:icon="@drawable/baseline_favorite_24"
+        android:title="@string/favorite"
+        app:showAsAction="collapseActionView|always"/>
     <item
         android:id="@+id/actionChangeLanguageSetting"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/change_language_setting"
         app:showAsAction="ifRoom" />
+
 
 </menu>
