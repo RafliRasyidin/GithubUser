@@ -4,8 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <permission android:name="com.rasyidin.githubuser.READ_DATABASE" android:protectionLevel="normal"/>
-    <permission android:name="com.rasyidin.githubuser.WRITE_DATABASE" android:protectionLevel="normal"/>
+    <permission
+        android:name="com.rasyidin.githubuser.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.rasyidin.githubuser.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -15,16 +19,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <provider
             android:name=".provider.FavoriteProvider"
             android:authorities="com.rasyidin.githubuser"
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.rasyidin.githubuser.READ_DATABASE"
-            android:writePermission="com.rasyidin.githubuser.WRITE_DATABASE"/>
+            android:writePermission="com.rasyidin.githubuser.WRITE_DATABASE" />
 
+        <activity android:name=".ui.activity.FavoriteActivity" />
         <activity android:name=".ui.activity.DetailUserActivity" />
         <activity android:name=".ui.activity.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
