@@ -16,5 +16,7 @@
     <string name="favorite">Favorit</string>
     <string name="tab_title_1">Pengikut</string>
     <string name="tab_title_2">Mengikuti</string>
+    <string name="data_favorite">Favorit Kosong</string>
+    <string name="list_favorites">Favorit</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

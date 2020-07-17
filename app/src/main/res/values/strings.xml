@@ -15,5 +15,7 @@
     <string name="tab_title_1">Followers</string>
     <string name="tab_title_2">Following</string>
     <string name="favorite">Favorite</string>
+    <string name="list_favorites">Favorites</string>
+    <string name="data_favorite">Favorite is Empty</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
