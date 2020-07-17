@@ -14,11 +14,14 @@ object MappingHelper {
 
         favoriteCursor.apply {
             while (moveToNext()) {
-                val id = getInt(getColumnIndexOrThrow(_ID))
-                val username = getString(getColumnIndexOrThrow(USERNAME))
-                val avatar = getString(getColumnIndexOrThrow(AVATAR_URL))
-                val type = getString(getColumnIndexOrThrow(TYPE))
-                favoriteList.add(User(id, username, avatar, type))
+                val user = User()
+                user.apply {
+                    id = getInt(getColumnIndexOrThrow(_ID))
+                    login = getString(getColumnIndexOrThrow(USERNAME))
+                    avatars = getString(getColumnIndexOrThrow(AVATAR_URL))
+                    type = getString(getColumnIndexOrThrow(TYPE))
+                    favoriteList.add(user)
+                }
             }
         }
         return favoriteList
