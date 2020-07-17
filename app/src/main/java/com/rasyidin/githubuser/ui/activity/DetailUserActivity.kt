@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -20,6 +22,7 @@ import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Compani
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.TYPE
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.USERNAME
+import com.rasyidin.githubuser.helper.MappingHelper
 import com.rasyidin.githubuser.model.User
 import com.rasyidin.githubuser.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -32,16 +35,21 @@ class DetailUserActivity : AppCompatActivity() {
     private lateinit var uriWithId: Uri
     private var user: User? = null
     private var isFavorite = false
+    private var fromFavorite: String? = null
+    private var fromMainActivity: String? = null
 
     companion object {
+        internal val TAG = DetailUserActivity::class.java.simpleName
         const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_MAIN = "extra_main"
+        const val EXTRA_FAVORITE = "extra_favorite"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
-        initToolbar()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = resources.getString(R.string.titleActionbarDetail)
 
         detailAdapter = DetailUserAdapter()
         rvDetailActivity.layoutManager = LinearLayoutManager(this)
@@ -51,6 +59,8 @@ class DetailUserActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
 
+        fromFavorite = intent.getStringExtra(EXTRA_FAVORITE)
+        fromMainActivity = intent.getStringExtra(EXTRA_MAIN)
         user = intent.getParcelableExtra(EXTRA_USERNAME) as User
 
         detailViewModel = ViewModelProvider(
@@ -64,11 +74,20 @@ class DetailUserActivity : AppCompatActivity() {
                 detailAdapter.setData(detailItemUser)
             }
         })
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
+
+        val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
+        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite!!)
+        for (data in dataUserObject) {
+            if (this.user?.login == data.login) {
+                isFavorite = true
+            }
+        }
 
         setFavorite()
     }
 
-    private fun setStatusFavorite(state: Boolean) {
+    private fun setFabFavorite(state: Boolean) {
         if (state) {
             fabFavorite.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -87,14 +106,16 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setFavorite() {
+        setFabFavorite(isFavorite)
         fabFavorite.setOnClickListener {
             if (isFavorite) {
                 user?.let {
                     contentResolver.delete(uriWithId, null, null)
+                    Log.d(TAG, "Removed Success")
                     Toast.makeText(this, "${it.login} Removed form Favorite", Toast.LENGTH_SHORT)
                         .show()
                     isFavorite = false
-                    setStatusFavorite(isFavorite)
+                    setFabFavorite(isFavorite)
                 }
             } else {
                 val values = ContentValues()
@@ -102,42 +123,57 @@ class DetailUserActivity : AppCompatActivity() {
                 values.put(AVATAR_URL, user?.avatars)
                 values.put(TYPE, user?.type)
                 contentResolver.insert(CONTENT_URI, values)
+                user?.login
                 Toast.makeText(this, "${user?.login} Added to Favorite", Toast.LENGTH_SHORT).show()
                 isFavorite = true
-                setStatusFavorite(true)
+                setFabFavorite(isFavorite)
             }
         }
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.menu_detail, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.actionChangeLanguageSetting) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+        when (item.itemId) {
+            R.id.actionChangeLanguageSetting -> {
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+            }
+            R.id.actionFavoriteFromDetail -> {
+                val mIntent = Intent(this, FavoriteActivity::class.java)
+                startActivity(mIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        if (fromMainActivity != null) {
+            val mIntent = Intent(this, MainActivity::class.java)
+            onBackPressed()
+            startActivity(mIntent)
+        } else if (fromFavorite != null) {
+            val mIntent = Intent(this, FavoriteActivity::class.java)
+            onBackPressed()
+            startActivity(mIntent)
+        }
         return super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (fromMainActivity != null) {
+                val mIntent = Intent(this, MainActivity::class.java)
+                startActivity(mIntent)
+            } else if (fromFavorite != null) {
+                val mIntent = Intent(this, FavoriteActivity::class.java)
+                startActivity(mIntent)
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
-
-    private fun initToolbar() {
-        val actionBar = supportActionBar
-        actionBar!!.title = resources.getString(R.string.titleActionbarDetail)
-        actionBar.setDisplayHomeAsUpEnabled(true)
-    }
-
-
 }
