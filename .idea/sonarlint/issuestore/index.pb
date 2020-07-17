@@ -19,8 +19,6 @@ Eapp/src/main/java/com/rasyidin/githubuser/ui/activity/MainActivity.kt,0\9\0910
 Kapp/src/main/java/com/rasyidin/githubuser/ui/activity/DetailUserActivity.kt,1\9\194f41e399b0a3bdd4a1505bde0c6850ffaf3e47
 A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
-V
-&app/src/main/res/values-in/strings.xml,a\0\a06f2d4b3e5f01d338d880f1f4d0231656947328
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 v
@@ -41,3 +39,13 @@ v
 Fapp/src/main/java/com/rasyidin/githubuser/provider/FavoriteProvider.kt,f\8\f8ea6c237b1bca4a77b577ca245f2f2249786389
 v
 Fapp/src/main/java/com/rasyidin/githubuser/viewmodel/DetailViewModel.kt,5\a\5a1eea5b0340ac11169731767650cbc08541e3e8
+b
+2app/src/main/res/drawable/baseline_favorite_24.xml,6\8\680f4ee2df5db4d47ab644e58d9503f8067ccbf5
+`
+0app/src/main/res/drawable/baseline_search_24.xml,c\e\ce838bb159c7e996092d17e2203dcaeb61bae211
+i
+9app/src/main/res/drawable/baseline_favorite_border_24.xml,c\7\c731a1aec7675bb0f77960826578b11f7a3e07d9
+y
+Iapp/src/main/java/com/rasyidin/githubuser/ui/activity/FavoriteActivity.kt,4\f\4fa4e4f464eb20d86576077ab6ceee4f341150bb
+t
+Dapp/src/main/java/com/rasyidin/githubuser/adapter/FavoriteAdapter.kt,9\6\96ceba5a05d5c9c32602cd9e81880a4abaaf729f

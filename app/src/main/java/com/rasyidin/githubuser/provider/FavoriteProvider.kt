@@ -44,10 +44,7 @@ class FavoriteProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String? {
-        TODO(
-            "Implement this to handle requests for the MIME type of the data" +
-                    "at the given URI"
-        )
+        return null
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
