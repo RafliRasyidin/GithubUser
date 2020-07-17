@@ -3,16 +3,18 @@ package com.rasyidin.githubuser.database
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion._ID
 
 class FavoriteHelper(context: Context) {
 
+    private var databaseHelper: DatabaseHelper = DatabaseHelper(context)
+    private lateinit var database: SQLiteDatabase
+
     companion object {
         private const val DATABaSE_TABLE = TABLE_NAME
-        private lateinit var databaseHelper: DatabaseHelper
-        private lateinit var database: SQLiteDatabase
         private var INSTANCE: FavoriteHelper? = null
         fun gteInstance(context: Context): FavoriteHelper =
             INSTANCE ?: synchronized(this) {
@@ -24,6 +26,7 @@ class FavoriteHelper(context: Context) {
         databaseHelper = DatabaseHelper(context)
     }
 
+    @Throws(SQLException::class)
     fun open() {
         database = databaseHelper.writableDatabase
     }
