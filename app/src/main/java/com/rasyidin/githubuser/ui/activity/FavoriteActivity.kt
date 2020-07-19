@@ -10,8 +10,6 @@ import com.rasyidin.githubuser.R
 import com.rasyidin.githubuser.adapter.FavoriteAdapter
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
 import com.rasyidin.githubuser.helper.MappingHelper
-import com.rasyidin.githubuser.model.User
-import com.rasyidin.githubuser.ui.activity.DetailUserActivity.Companion.EXTRA_USERNAME
 import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -32,7 +30,7 @@ class FavoriteActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             val deferredUser = async(Dispatchers.IO) {
                 val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
-                MappingHelper.mapCursorToArrayList(cursor!!)
+                MappingHelper.mapCursorToArrayList(cursor)
             }
 
             val favorite = deferredUser.await()
