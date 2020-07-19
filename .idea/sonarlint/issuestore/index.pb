@@ -49,3 +49,9 @@ y
 Iapp/src/main/java/com/rasyidin/githubuser/ui/activity/FavoriteActivity.kt,4\f\4fa4e4f464eb20d86576077ab6ceee4f341150bb
 t
 Dapp/src/main/java/com/rasyidin/githubuser/adapter/FavoriteAdapter.kt,9\6\96ceba5a05d5c9c32602cd9e81880a4abaaf729f
+]
+-app/src/main/res/layout/activity_favorite.xml,8\7\875622353c0dee6535d4a560c0c4ba8ee2b9f4b5
+‚
+Rapp/src/main/java/com/rasyidin/githubuser/ui/fragment/SettingPreferenceFragment.kt,1\d\1d5b4e938d35ee5f236f93ba554313a34fe650fb
+x
+Happ/src/main/java/com/rasyidin/githubuser/ui/activity/SettingActivity.kt,3\8\381c9697a2c357e6ce3e06177627ed0bd8ee8e12
