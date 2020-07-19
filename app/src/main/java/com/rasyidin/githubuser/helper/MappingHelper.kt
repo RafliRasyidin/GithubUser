@@ -9,10 +9,10 @@ import com.rasyidin.githubuser.model.User
 
 object MappingHelper {
 
-    fun mapCursorToArrayList(favoriteCursor: Cursor): ArrayList<User> {
+    fun mapCursorToArrayList(favoriteCursor: Cursor?): ArrayList<User> {
         val favoriteList = ArrayList<User>()
 
-        favoriteCursor.apply {
+        favoriteCursor?.apply {
             while (moveToNext()) {
                 val user = User()
                 user.apply {
@@ -25,18 +25,5 @@ object MappingHelper {
             }
         }
         return favoriteList
-    }
-
-    fun mapCursorToObject(favoriteCursor: Cursor?): User{
-        var user = User()
-        favoriteCursor?.apply {
-            moveToFirst()
-            val id = getInt(getColumnIndexOrThrow(_ID))
-            val username = getString(getColumnIndexOrThrow(USERNAME))
-            val avatar = getString(getColumnIndexOrThrow(AVATAR_URL))
-            val type = getString(getColumnIndexOrThrow(TYPE))
-            user = User(id, username, avatar, type)
-        }
-        return user
     }
 }
