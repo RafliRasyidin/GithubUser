@@ -50,13 +50,8 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = resources.getString(R.string.title_actionbar_detail)
 
-        detailAdapter = DetailUserAdapter()
-        rvDetailActivity.layoutManager = LinearLayoutManager(this)
-        rvDetailActivity.adapter = detailAdapter
-
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        viewPager.adapter = sectionsPagerAdapter
-        tabLayout.setupWithViewPager(viewPager)
+        showRecyclerList()
+        setPagerAdapter()
 
         fromFavorite = intent.getStringExtra(EXTRA_FAVORITE)
         fromMainActivity = intent.getStringExtra(EXTRA_MAIN)
@@ -174,5 +169,17 @@ class DetailUserActivity : AppCompatActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun showRecyclerList() {
+        detailAdapter = DetailUserAdapter()
+        rvDetailActivity.layoutManager = LinearLayoutManager(this)
+        rvDetailActivity.adapter = detailAdapter
+    }
+
+    private fun setPagerAdapter() {
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        viewPager.adapter = sectionsPagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
     }
 }
