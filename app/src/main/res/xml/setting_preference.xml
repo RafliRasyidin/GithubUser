@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <SwitchPreference
+        android:icon="@drawable/baseline_notifications_24"
+        android:key="@string/key_reminder"
+        android:title="@string/label_reminder" />
+
+    <Preference
+        android:icon="@drawable/baseline_g_translate_24"
+        android:key="@string/key_language"
+        android:summary="@string/set_language"
+        android:title="@string/change_language_setting" />
+
 </PreferenceScreen>
