@@ -138,7 +138,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.actionChangeLanguageSetting -> {
+            R.id.actionSetting -> {
                 val mIntent = Intent(this, SettingActivity::class.java)
                 startActivity(mIntent)
             }

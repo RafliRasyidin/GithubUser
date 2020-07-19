@@ -13,7 +13,7 @@
         android:title="@string/favorite"
         app:showAsAction="collapseActionView|always"/>
     <item
-        android:id="@+id/actionChangeLanguageSetting"
+        android:id="@+id/actionSetting"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/change_language_setting"
         app:showAsAction="ifRoom" />
