@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
@@ -49,7 +48,7 @@ class DetailUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = resources.getString(R.string.titleActionbarDetail)
+        supportActionBar?.title = resources.getString(R.string.title_actionbar_detail)
 
         detailAdapter = DetailUserAdapter()
         rvDetailActivity.layoutManager = LinearLayoutManager(this)
@@ -77,7 +76,7 @@ class DetailUserActivity : AppCompatActivity() {
         uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
 
         val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
-        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite!!)
+        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite)
         for (data in dataUserObject) {
             if (this.user?.login == data.login) {
                 isFavorite = true
@@ -140,7 +139,7 @@ class DetailUserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.actionChangeLanguageSetting -> {
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                val mIntent = Intent(this, SettingActivity::class.java)
                 startActivity(mIntent)
             }
             R.id.actionFavoriteFromDetail -> {
