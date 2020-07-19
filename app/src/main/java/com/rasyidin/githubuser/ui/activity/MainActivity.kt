@@ -26,10 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        userAdapter = ListUserAdapter()
-
-        rvUser.layoutManager = LinearLayoutManager(this)
-        rvUser.adapter = userAdapter
+        showRecyclerList()
 
         userViewModel = ViewModelProvider(
             this,
@@ -92,6 +89,12 @@ class MainActivity : AppCompatActivity() {
             progressBarListItem.visibility = View.GONE
             imgSearch.visibility = View.GONE
         }
+    }
+
+    private fun showRecyclerList() {
+        userAdapter = ListUserAdapter()
+        rvUser.layoutManager = LinearLayoutManager(this)
+        rvUser.adapter = userAdapter
     }
 
 }
