@@ -24,7 +24,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/allerta"
         android:maxLines="1"
-        android:text="@string/userName"
+        android:text="@string/user_name"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:textStyle="bold"
