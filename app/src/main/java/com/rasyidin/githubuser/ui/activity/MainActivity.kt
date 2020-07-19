@@ -4,12 +4,11 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,8 +73,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.actionChangeLanguageSetting -> {
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            R.id.actionSetting -> {
+                val mIntent = Intent(this, SettingActivity::class.java)
                 startActivity(mIntent)
             }
             R.id.actionFavorite -> {
