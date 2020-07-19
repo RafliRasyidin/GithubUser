@@ -4,12 +4,12 @@
     <string name="search">Pencarian</string>
     <string name="Username">Nama Pengguna </string>
     <string name="company">Perusahaan</string>
-    <string name="btnSearch">Cari</string>
-    <string name="typeUser">Tipe</string>
-    <string name="userName">Nama</string>
+    <string name="type_user">Tipe</string>
+    <string name="user_name">Nama</string>
     <string name="followers">Pengikut</string>
     <string name="_20">20</string>
-    <string name="titleActionbarDetail">Detail Pengguna</string>
+    <string name="title_actionbar_detail">Detail Pengguna</string>
+    <string name="title_actionbar_setting">Pengaturan</string>
     <string name="change_language_setting">Ubah Pengaturan Bahasa</string>
     <string name="following">Mengikuti</string>
     <string name="location">Lokasi</string>
@@ -18,5 +18,13 @@
     <string name="tab_title_2">Mengikuti</string>
     <string name="data_favorite">Favorit Kosong</string>
     <string name="list_favorites">Favorit</string>
+    <string name="label_reminder">Pengingat pada pukul 9.00</string>
+    <string name="key_reminder">Pengingat</string>
+    <string name="key_language">Bahasa</string>
+    <string name="set_language">Indonesia</string>
+    <string name="toast_reminder_activated">Pengingat Aktif</string>
+    <string name="toast_reminder_canceled">Pengingat Dibatalkan</string>
+    <string name="notification_title">Pengingat</string>
+    <string name="notification_message">Ayo temukan pengguna populer di Github!</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

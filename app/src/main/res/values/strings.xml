@@ -3,11 +3,11 @@
     <string name="search">Search</string>
     <string name="Username">Username </string>
     <string name="company">Company</string>
-    <string name="btnSearch">Search</string>
-    <string name="typeUser">Type</string>
-    <string name="userName">Name</string>
+    <string name="type_user">Type</string>
+    <string name="user_name">Name</string>
     <string name="followers">Followers</string>
-    <string name="titleActionbarDetail">User Detail</string>
+    <string name="title_actionbar_detail">User Detail</string>
+    <string name="title_actionbar_setting">Setting</string>
     <string name="_20">20</string>
     <string name="change_language_setting">Change Language Setting</string>
     <string name="following">Following</string>
@@ -17,5 +17,13 @@
     <string name="favorite">Favorite</string>
     <string name="list_favorites">Favorites</string>
     <string name="data_favorite">Favorite is Empty</string>
+    <string name="label_reminder">Reminder at 9.00 AM</string>
+    <string name="key_reminder">Reminder</string>
+    <string name="key_language">language</string>
+    <string name="set_language">English</string>
+    <string name="toast_reminder_activated">Reminder is Activated</string>
+    <string name="toast_reminder_canceled">Reminder Canceled</string>
+    <string name="notification_title">Reminder</string>
+    <string name="notification_message">Let\'s find popular user on Github!</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
