@@ -114,10 +114,11 @@ class DetailUserActivity : AppCompatActivity() {
                     setFabFavorite(isFavorite)
                 }
             } else {
-                val values = ContentValues()
-                values.put(USERNAME, user?.login)
-                values.put(AVATAR_URL, user?.avatars)
-                values.put(TYPE, user?.type)
+                val values = ContentValues().apply {
+                    put(USERNAME, user?.login)
+                    put(AVATAR_URL, user?.avatars)
+                    put(TYPE, user?.type)
+                }
                 contentResolver.insert(CONTENT_URI, values)
                 user?.login
                 Toast.makeText(this, "${user?.login} Added to Favorite", Toast.LENGTH_SHORT).show()
