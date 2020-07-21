@@ -59,28 +59,8 @@ class DetailUserActivity : AppCompatActivity() {
 
         uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
 
-        val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
-        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite)
-        for (data in dataUserObject) {
-            if (this.user?.login == data.login) {
-                isFavorite = true
-                Log.d(TAG, "This is favorite already")
-            }
-        }
+        setDetail()
         setFavorite()
-
-        detailViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(DetailViewModel::class.java)
-
-        detailViewModel.setUserDetail(user!!.login!!)
-        detailViewModel.getDetailUser().observe(this, Observer { detailItemUser ->
-            if (detailItemUser != null) {
-                detailAdapter.setData(detailItemUser)
-            }
-        })
-
     }
 
     private fun setFabFavorite(state: Boolean) {
@@ -102,7 +82,7 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setFavorite() {
-        setFabFavorite(isFavorite)
+        isFavorited()
         fabFavorite.setOnClickListener {
             if (isFavorite) {
                 user?.let {
@@ -127,6 +107,18 @@ class DetailUserActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun isFavorited() {
+        val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
+        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite)
+        for (data in dataUserObject) {
+            if (this.user?.login == data.login) {
+                isFavorite = true
+                setFabFavorite(isFavorite)
+                Log.d(TAG, "This is favorite already")
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -186,4 +178,17 @@ class DetailUserActivity : AppCompatActivity() {
         tabLayout.setupWithViewPager(viewPager)
     }
 
+    private fun setDetail() {
+        detailViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(DetailViewModel::class.java)
+
+        detailViewModel.setUserDetail(user!!.login!!)
+        detailViewModel.getDetailUser().observe(this, Observer { detailItemUser ->
+            if (detailItemUser != null) {
+                detailAdapter.setData(detailItemUser)
+            }
+        })
+    }
 }
