@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.rasyidin.githubuser.R
 import com.rasyidin.githubuser.adapter.FavoriteAdapter
-import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
+import com.rasyidin.githubuser.database.DatabaseContract.CONTENT_URI
 import com.rasyidin.githubuser.helper.MappingHelper
 import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.coroutines.Dispatchers

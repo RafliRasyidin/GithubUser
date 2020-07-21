@@ -7,7 +7,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 import com.rasyidin.githubuser.database.DatabaseContract.AUTHORITY
-import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
+import com.rasyidin.githubuser.database.DatabaseContract.CONTENT_URI
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
 import com.rasyidin.githubuser.database.FavoriteHelper
 
