@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GithubUserConsumerApp</string>
+    <string name="Username">Username</string>
+    <string name="type_user">Type</string>
+    <string name="empty_favorite">Favorite is Empty</string>
+    <string name="list_favorites">Favorites</string>
+</resources>
