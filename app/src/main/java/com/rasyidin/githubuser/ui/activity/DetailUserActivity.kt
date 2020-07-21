@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rasyidin.githubuser.R
 import com.rasyidin.githubuser.adapter.DetailUserAdapter
 import com.rasyidin.githubuser.adapter.SectionsPagerAdapter
+import com.rasyidin.githubuser.database.DatabaseContract.CONTENT_URI
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.AVATAR_URL
-import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.CONTENT_URI
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.TYPE
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.USERNAME
 import com.rasyidin.githubuser.helper.MappingHelper
@@ -57,6 +57,18 @@ class DetailUserActivity : AppCompatActivity() {
         fromMainActivity = intent.getStringExtra(EXTRA_MAIN)
         user = intent.getParcelableExtra(EXTRA_USERNAME) as User
 
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
+
+        val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
+        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite)
+        for (data in dataUserObject) {
+            if (this.user?.login == data.login) {
+                isFavorite = true
+                Log.d(TAG, "This is favorite already")
+            }
+        }
+        setFavorite()
+
         detailViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
@@ -68,17 +80,7 @@ class DetailUserActivity : AppCompatActivity() {
                 detailAdapter.setData(detailItemUser)
             }
         })
-        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
 
-        val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
-        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite)
-        for (data in dataUserObject) {
-            if (this.user?.login == data.login) {
-                isFavorite = true
-            }
-        }
-
-        setFavorite()
     }
 
     private fun setFabFavorite(state: Boolean) {
@@ -142,7 +144,7 @@ class DetailUserActivity : AppCompatActivity() {
                 startActivity(mIntent)
             }
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -182,4 +184,5 @@ class DetailUserActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
     }
+
 }
