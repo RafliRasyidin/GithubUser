@@ -8,7 +8,7 @@ object DatabaseContract {
     const val AUTHORITY = "com.rasyidin.githubuser"
     const val SCHEME = "content"
 
-    class FavoriteColumns : BaseColumns {
+    internal class FavoriteColumns : BaseColumns {
         companion object {
             const val TABLE_NAME = "favorite"
             const val _ID = "_id"
