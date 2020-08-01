@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.TABLE_NAME
+import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.USERNAME
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion._ID
 
 class FavoriteHelper(context: Context) {
@@ -14,9 +15,9 @@ class FavoriteHelper(context: Context) {
     private lateinit var database: SQLiteDatabase
 
     companion object {
-        private const val DATABaSE_TABLE = TABLE_NAME
+        private const val DATABASE_TABLE = TABLE_NAME
         private var INSTANCE: FavoriteHelper? = null
-        fun gteInstance(context: Context): FavoriteHelper =
+        fun getInstance(context: Context): FavoriteHelper =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: FavoriteHelper(context)
             }
@@ -31,14 +32,9 @@ class FavoriteHelper(context: Context) {
         database = databaseHelper.writableDatabase
     }
 
-    fun close() {
-        databaseHelper.close()
-        if (database.isOpen) database.close()
-    }
-
     fun queryAll(): Cursor {
         return database.query(
-            DATABaSE_TABLE,
+            DATABASE_TABLE,
             null,
             null,
             null,
@@ -48,12 +44,12 @@ class FavoriteHelper(context: Context) {
         )
     }
 
-    fun queryById(id: String): Cursor {
+    fun queryByLogin(login: String): Cursor {
         return database.query(
-            DATABaSE_TABLE,
+            DATABASE_TABLE,
             null,
-            "$_ID = ?",
-            arrayOf(id),
+            "$USERNAME = ?",
+            arrayOf(login),
             null,
             null,
             null,
@@ -62,10 +58,10 @@ class FavoriteHelper(context: Context) {
     }
 
     fun insert(values: ContentValues?): Long {
-        return database.insert(DATABaSE_TABLE, null, values)
+        return database.insert(DATABASE_TABLE, null, values)
     }
 
-    fun deleteById(id: String): Int {
-        return database.delete(TABLE_NAME, "$_ID = '$id'", null)
+    fun deleteByUsername(username: String): Int {
+        return database.delete(TABLE_NAME, "$USERNAME = '$username'", null)
     }
 }
