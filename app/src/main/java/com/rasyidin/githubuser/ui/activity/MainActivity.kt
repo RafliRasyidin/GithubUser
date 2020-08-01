@@ -4,9 +4,11 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var userAdapter: ListUserAdapter
     private lateinit var userViewModel: UserViewModel
+    private var backPress: Long = 0
+    private var backToast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +84,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        backToast = Toast.makeText(baseContext, "Press back again to exit!", Toast.LENGTH_SHORT)
+        if (backPress + 2000 > System.currentTimeMillis()) {
+            val exit = Intent(Intent.ACTION_MAIN)
+            exit.addCategory(Intent.CATEGORY_HOME)
+            exit.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(exit)
+            backToast?.cancel()
+            return super.onKeyDown(keyCode, event)
+        } else backToast?.show()
+
+        backPress = System.currentTimeMillis()
+        return true
     }
 
     private fun showLoading(state: Boolean) {
