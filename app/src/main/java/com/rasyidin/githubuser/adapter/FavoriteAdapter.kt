@@ -48,7 +48,6 @@ class FavoriteAdapter(private val activity: Activity) :
                 itemView.setOnClickListener {
                     Intent(activity, DetailUserActivity::class.java).apply {
                         putExtra(DetailUserActivity.EXTRA_USERNAME, user)
-                        putExtra(DetailUserActivity.EXTRA_FAVORITE, "FavoriteActivity")
                     }.run {
                         activity.startActivity(this)
                     }
