@@ -26,22 +26,7 @@ class FavoriteActivity : AppCompatActivity() {
         supportActionBar?.title = resources.getString(R.string.list_favorites)
 
         favoriteAdapter = FavoriteAdapter(this)
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val deferredUser = async(Dispatchers.IO) {
-                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
-                MappingHelper.mapCursorToArrayList(cursor)
-            }
-
-            val favorite = deferredUser.await()
-            if (favorite.size > 0) {
-                favoriteAdapter.listFavorite = favorite
-            } else {
-                favoriteAdapter.listFavorite = ArrayList()
-                Snackbar.make(rvUserFavorite, R.string.data_favorite, Snackbar.LENGTH_SHORT).show()
-            }
-        }
-
+        loadDataAsync()
         showRecyclerView()
     }
 
@@ -57,5 +42,22 @@ class FavoriteActivity : AppCompatActivity() {
         rvUserFavorite.adapter = favoriteAdapter
         rvUserFavorite.layoutManager = LinearLayoutManager(this)
         rvUserFavorite.setHasFixedSize(true)
+    }
+
+    private fun loadDataAsync() {
+        GlobalScope.launch(Dispatchers.Main) {
+            val deferredUser = async(Dispatchers.IO) {
+                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
+                MappingHelper.mapCursorToArrayList(cursor)
+            }
+
+            val favorite = deferredUser.await()
+            if (favorite.size > 0) {
+                favoriteAdapter.listFavorite = favorite
+            } else {
+                favoriteAdapter.listFavorite = ArrayList()
+                Snackbar.make(rvUserFavorite, R.string.data_favorite, Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 }
