@@ -26,5 +26,7 @@
     <string name="toast_reminder_canceled">Pengingat Dibatalkan</string>
     <string name="notification_title">Pengingat</string>
     <string name="notification_message">Ayo temukan pengguna populer di Github!</string>
+    <string name="appwidget_text">DAFTAR FAVORIT</string>
+    <string name="no_data">TIDAK ADA DATA</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

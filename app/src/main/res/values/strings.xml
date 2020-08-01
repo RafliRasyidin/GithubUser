@@ -25,5 +25,7 @@
     <string name="toast_reminder_canceled">Reminder Canceled</string>
     <string name="notification_title">Reminder</string>
     <string name="notification_message">Let\'s find popular user on Github!</string>
+    <string name="appwidget_text">LIST FAVORITE</string>
+    <string name="no_data">NO DATA</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
