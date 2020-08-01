@@ -15,19 +15,18 @@ class FavoriteProvider : ContentProvider() {
 
     companion object {
         private const val FAVORITE = 1
-        private const val FAVORITE_ID = 2
+        private const val FAVORITE_LOGIN = 3
         private val sUriMatcher = UriMatcher(UriMatcher.NO_MATCH)
         private lateinit var favoriteHelper: FavoriteHelper
 
         init {
             sUriMatcher.addURI(AUTHORITY, TABLE_NAME, FAVORITE)
-
-            sUriMatcher.addURI(AUTHORITY, "$TABLE_NAME/#", FAVORITE_ID)
+            sUriMatcher.addURI(AUTHORITY, "$TABLE_NAME/*", FAVORITE_LOGIN)
         }
     }
 
     override fun onCreate(): Boolean {
-        favoriteHelper = FavoriteHelper.gteInstance(context as Context)
+        favoriteHelper = FavoriteHelper.getInstance(context as Context)
         favoriteHelper.open()
         return true
     }
@@ -38,7 +37,7 @@ class FavoriteProvider : ContentProvider() {
     ): Cursor? {
         return when (sUriMatcher.match(uri)) {
             FAVORITE -> favoriteHelper.queryAll()
-            FAVORITE_ID -> favoriteHelper.queryById(uri.lastPathSegment.toString())
+            FAVORITE_LOGIN -> favoriteHelper.queryByLogin(uri.lastPathSegment.toString())
             else -> null
         }
     }
@@ -64,8 +63,8 @@ class FavoriteProvider : ContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        val deleted: Int = when (FAVORITE_ID) {
-            sUriMatcher.match(uri) -> favoriteHelper.deleteById(uri.lastPathSegment.toString())
+        val deleted: Int = when (FAVORITE_LOGIN) {
+            sUriMatcher.match(uri) -> favoriteHelper.deleteByUsername(uri.lastPathSegment.toString())
             else -> 0
         }
         context?.contentResolver?.notifyChange(CONTENT_URI, null)

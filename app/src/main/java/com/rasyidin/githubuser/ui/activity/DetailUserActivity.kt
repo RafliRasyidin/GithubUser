@@ -1,11 +1,11 @@
 package com.rasyidin.githubuser.ui.activity
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -21,9 +21,9 @@ import com.rasyidin.githubuser.database.DatabaseContract.CONTENT_URI
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.AVATAR_URL
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.TYPE
 import com.rasyidin.githubuser.database.DatabaseContract.FavoriteColumns.Companion.USERNAME
-import com.rasyidin.githubuser.helper.MappingHelper
 import com.rasyidin.githubuser.model.User
 import com.rasyidin.githubuser.viewmodel.DetailViewModel
+import com.rasyidin.githubuser.widget.FavoriteWidget
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.tab_layout.*
 
@@ -31,34 +31,27 @@ class DetailUserActivity : AppCompatActivity() {
 
     private lateinit var detailViewModel: DetailViewModel
     private lateinit var detailAdapter: DetailUserAdapter
-    private lateinit var uriWithId: Uri
+    private lateinit var uriWithUsername: Uri
     private var user: User? = null
     private var isFavorite = false
-    private var fromFavorite: String? = null
-    private var fromMainActivity: String? = null
 
     companion object {
         internal val TAG = DetailUserActivity::class.java.simpleName
         const val EXTRA_USERNAME = "extra_username"
-        const val EXTRA_MAIN = "extra_main"
-        const val EXTRA_FAVORITE = "extra_favorite"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = resources.getString(R.string.title_actionbar_detail)
 
         showRecyclerList()
         setPagerAdapter()
 
-        fromFavorite = intent.getStringExtra(EXTRA_FAVORITE)
-        fromMainActivity = intent.getStringExtra(EXTRA_MAIN)
         user = intent.getParcelableExtra(EXTRA_USERNAME) as User
 
-        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
-
+        uriWithUsername = Uri.parse(CONTENT_URI.toString() + "/" + user?.login)
+        isFavorited()
         setDetail()
         setFavorite()
     }
@@ -82,15 +75,15 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun setFavorite() {
-        isFavorited()
         fabFavorite.setOnClickListener {
             if (isFavorite) {
                 user?.let {
-                    contentResolver.delete(uriWithId, null, null)
+                    contentResolver.delete(uriWithUsername, null, null)
                     Log.d(TAG, "Removed Success")
                     Toast.makeText(this, "${it.login} Removed form Favorite", Toast.LENGTH_SHORT)
                         .show()
                     isFavorite = false
+                    sendUpdateFavoriteList(this)
                     setFabFavorite(isFavorite)
                 }
             } else {
@@ -100,6 +93,7 @@ class DetailUserActivity : AppCompatActivity() {
                     put(TYPE, user?.type)
                 }
                 contentResolver.insert(CONTENT_URI, values)
+                sendUpdateFavoriteList(this)
                 user?.login
                 Toast.makeText(this, "${user?.login} Added to Favorite", Toast.LENGTH_SHORT).show()
                 isFavorite = true
@@ -110,14 +104,16 @@ class DetailUserActivity : AppCompatActivity() {
     }
 
     private fun isFavorited() {
-        val dataUserFavorite = contentResolver?.query(uriWithId, null, null, null, null)
-        val dataUserObject = MappingHelper.mapCursorToArrayList(dataUserFavorite)
-        for (data in dataUserObject) {
-            if (this.user?.login == data.login) {
-                isFavorite = true
-                setFabFavorite(isFavorite)
-                Log.d(TAG, "This is favorite already")
+        val dataUserFavorite = contentResolver?.query(uriWithUsername, null, null, null, null)
+        val favorite = (1..dataUserFavorite!!.count).map {
+            dataUserFavorite.apply {
+                moveToNext()
+                getInt(dataUserFavorite.getColumnIndexOrThrow(USERNAME))
             }
+        }
+        if (favorite.isNotEmpty()) {
+            isFavorite = true
+            setFabFavorite(isFavorite)
         }
     }
 
@@ -138,32 +134,6 @@ class DetailUserActivity : AppCompatActivity() {
             }
         }
         return true
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        if (fromMainActivity != null) {
-            val mIntent = Intent(this, MainActivity::class.java)
-            onBackPressed()
-            startActivity(mIntent)
-        } else if (fromFavorite != null) {
-            val mIntent = Intent(this, FavoriteActivity::class.java)
-            onBackPressed()
-            startActivity(mIntent)
-        }
-        return super.onSupportNavigateUp()
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (fromMainActivity != null) {
-                val mIntent = Intent(this, MainActivity::class.java)
-                startActivity(mIntent)
-            } else if (fromFavorite != null) {
-                val mIntent = Intent(this, FavoriteActivity::class.java)
-                startActivity(mIntent)
-            }
-        }
-        return super.onKeyDown(keyCode, event)
     }
 
     private fun showRecyclerList() {
@@ -190,5 +160,11 @@ class DetailUserActivity : AppCompatActivity() {
                 detailAdapter.setData(detailItemUser)
             }
         })
+    }
+
+    private fun sendUpdateFavoriteList(context: Context) {
+        val mIntent = Intent(context, FavoriteWidget::class.java)
+        mIntent.action = FavoriteWidget.UPDATE_WIDGET
+        context.sendBroadcast(mIntent)
     }
 }
